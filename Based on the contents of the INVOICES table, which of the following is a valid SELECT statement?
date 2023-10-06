@@ -1,0 +1,4 @@
+SELECT invoice_num FROM invoices
+WHERE cust_id IN (SELECT cust_id 
+                 FROM invoices
+                 WHERE cust_id = 435);
