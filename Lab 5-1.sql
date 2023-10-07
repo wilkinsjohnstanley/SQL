@@ -96,11 +96,37 @@ FROM INVOICES
 WHERE INVOICE_NUM IN (SELECT INVOICE_NUM
                       FROM INVOICE LINE
                       WHERE ITEM ID IN (SELECT ITEM. ITEM ID
-                                        WHERE ITEM.ITEM_ID = INVOICE_LINE.ITEM_ID
-                                        FROM ITEM, CUSTOMER, INVOICE LINE, INVOICES
-                                        AND CUSTOMER.CUST_ID = INVOICES.CUST_ID (AND INVOICES. INVOICE_NUM = INVOICE LINE. INVOICE NUM
-                                        AND (ITEM.DESCRIPTION = 'Wild Bird Food (25 lb)' OR (CUSTOMER.FIRST_NAME = 'James' AND CUSTOMER. LAST_NAME = 'Gonzalez'))));
-
+                                        FROM ITEM, INVOICES, INVOICE_LINE, CUSTOMER
+                                        WHERE INVOICES.INVOICE_NUM = INVOICE_LINE.INVOICE_NUM
+                                        AND INVOICE_LINE.ITEM_ID = ITEM.ITEM_ID
+                                        AND INVOICES.CUST_ID = CUSTOMER.CUST_ID
+                                        AND CUSTOMER.FIRST_NAME = 'James'
+                                        AND CUSTOMER.LAST_NAME = 'Gonzalez'
+                                        AND ITEM.DESCRIPTION = 'Wild Bird Food (25lb)'));
+17.
+SELECT INVOICE_NUM, INVOICE_DATE
+FROM INVOICES
+WHERE INVOICE_NUM IN (SELECT INVOICE_NUM
+                      FROM INVOICE LINE
+                      WHERE ITEM ID IN (SELECT ITEM. ITEM ID
+                                        FROM ITEM, INVOICES, INVOICE_LINE, CUSTOMER
+                                        WHERE INVOICES.INVOICE_NUM = INVOICE_LINE.INVOICE_NUM
+                                        AND INVOICE_LINE.ITEM_ID = ITEM.ITEM_ID
+                                        AND INVOICES.CUST_ID = CUSTOMER.CUST_ID
+                                        AND CUSTOMER.FIRST_NAME = 'James'
+                                        AND CUSTOMER.LAST_NAME = 'Gonzalez'
+                                        AND ITEM.DESCRIPTION <> 'Wild Bird Food (25lb)'));
+18. SELECT ITEM_ID, DESCRIPTION, PRICE, CATEGORY
+FROM ITEM
+WHERE PRICE > ALL (SELECT PRICE
+                  FROM ITEM
+                  WHERE CATEGORY = 'CAT');
+19. 
+SELECT ITEM.ITEM_ID, DESCRIPTION, ON_HAND, INVOICE_NUM, QUANTITY
+FROM ITEM
+    LEFT JOIN INVOICE_LINE
+      ON (ITEM.ITEM_ID = INVOICE_LINE.ITEM_ID)
+      ORDER BY ITEM.ITEM_ID;
 
 
 
