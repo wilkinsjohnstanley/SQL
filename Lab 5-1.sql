@@ -88,27 +88,28 @@ WHERE INVOICE_NUM IN (SELECT INVOICE_NUM
                   FROM INVOICE_LINE
                   WHERE ITEM_ID IN (SELECT ITEM_ID
                                         FROM ITEM
-                                        WHERE DESCRIPTION = 'Wild bird foot (25lb)'));
+                                        WHERE DESCRIPTION = 'Wild Bird Food (25 lb)'));
 16. 
 
 SELECT INVOICE_NUM, INVOICE_DATE
 FROM INVOICES
 WHERE INVOICE_NUM IN (SELECT INVOICE_NUM
-                      FROM INVOICE LINE
-                      WHERE ITEM ID IN (SELECT ITEM. ITEM ID
+                      FROM INVOICE_LINE
+                      WHERE ITEM_ID IN (SELECT ITEM.ITEM_ID
                                         FROM ITEM, INVOICES, INVOICE_LINE, CUSTOMER
                                         WHERE INVOICES.INVOICE_NUM = INVOICE_LINE.INVOICE_NUM
                                         AND INVOICE_LINE.ITEM_ID = ITEM.ITEM_ID
                                         AND INVOICES.CUST_ID = CUSTOMER.CUST_ID
                                         AND CUSTOMER.FIRST_NAME = 'James'
                                         AND CUSTOMER.LAST_NAME = 'Gonzalez'
-                                        AND ITEM.DESCRIPTION = 'Wild Bird Food (25lb)'));
+                                        OR ITEM.DESCRIPTION = 'Wild Bird Food (25lb)'));
+
 17.
 SELECT INVOICE_NUM, INVOICE_DATE
 FROM INVOICES
 WHERE INVOICE_NUM IN (SELECT INVOICE_NUM
-                      FROM INVOICE LINE
-                      WHERE ITEM ID IN (SELECT ITEM. ITEM ID
+                      FROM INVOICE_LINE
+                      WHERE ITEM_ID IN (SELECT ITEM.ITEM_ID
                                         FROM ITEM, INVOICES, INVOICE_LINE, CUSTOMER
                                         WHERE INVOICES.INVOICE_NUM = INVOICE_LINE.INVOICE_NUM
                                         AND INVOICE_LINE.ITEM_ID = ITEM.ITEM_ID
